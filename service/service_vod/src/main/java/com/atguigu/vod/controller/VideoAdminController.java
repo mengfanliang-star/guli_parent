@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Api(description="阿里云视频点播微服务")
 @CrossOrigin //跨域
 @RestController
@@ -32,5 +34,14 @@ public class VideoAdminController {
 
 		return R.ok();
 
+	}
+	//删除多个阿里云视频的方法
+	@DeleteMapping("delete-batch")
+	public R removeVideoList(
+			@ApiParam(name = "videoIdList", value = "云端视频id", required = true)
+			@RequestParam("videoIdList") List<String> videoIdList){
+
+		videoService.removeVideoList(videoIdList);
+		return R.ok().message("视频删除成功");
 	}
 }
